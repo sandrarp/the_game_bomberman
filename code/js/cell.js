@@ -1,9 +1,9 @@
-function Cell(game, posx, posy) {
+function Cell(game, x, y) {
     this.game = game;
-    this.posx = posx;
-    this.posy = posy;
-    this.width = 50;
-    this.height = 50;
+    this.w = 50;
+    this.h = 50;
+    this.x = this.w * x;
+    this.y = this.h * y;
     this.image = new Image();
 }
 
@@ -15,18 +15,18 @@ Cell.prototype.update = function() {
 
 }
 
-function Obstacle() {
-    Cell.call(this, posx, posy);
+function Block(game, x, y) {
+    Cell.call(this, game, x, y);
 }
 
-Obstacle.prototype.receiveDamage = function() {
+Block.prototype.receiveDamage = function() {
 
 }
 
-function Bomb() {
-    Cell.call(this, posx, posy);
+function Bomb(game, x, y) {
+    Cell.call(this, game, x, y);
 }
 
-Obstacle.prototype.explode = function() {
+Bomb.prototype.explode = function() {
 
 }
