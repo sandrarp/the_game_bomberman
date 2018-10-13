@@ -47,7 +47,12 @@ Board.prototype.defineCells = function() {
 }
 
 Board.prototype.draw = function() {
-    
+    for(var i = 0; i < this.cells.length; i++) {
+        for(var j = 0; j < this.cells[i].length; j++) {
+            var object = this.cells[i][j];
+            object.draw();
+        }
+    }
 }
 
 Board.prototype.update = function() {

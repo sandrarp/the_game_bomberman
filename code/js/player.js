@@ -8,11 +8,12 @@ function Player(game) {
     this.vy = 0;
     this.livesLeft = 3;
     this.image = new Image();
+    this.image.src = 'img/player.png';
 }
 
 Player.prototype.draw = function() {
-    var imgScale = 17/26;
-    // myGameArea.ctx.drawImage(car, carX, carY,carW,carH);
+    // var imgScale = 17/26;
+    this.game.ctx.drawImage(this.image, this.x, this.y,this.w,this.y);
 }
 
 Player.prototype.walk = function() {
