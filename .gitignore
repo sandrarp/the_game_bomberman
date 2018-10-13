@@ -1,0 +1,3 @@
+# Ignore refs and resources folders
+resources/
+refs/
