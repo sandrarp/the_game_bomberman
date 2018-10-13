@@ -1,4 +1,5 @@
 function Player(game,posx, posy) {
+    this.game = game;
     this.posx = posx;
     this.posy = posy;
     this.vx = 0;

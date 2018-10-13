@@ -1,4 +1,5 @@
-function Cell(posx, posy) {
+function Cell(game, posx, posy) {
+    this.game = game;
     this.posx = posx;
     this.posy = posy;
     this.width = 50;
