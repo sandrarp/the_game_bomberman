@@ -1,5 +1,7 @@
 function Player(game,posx, posy) {
     this.game = game;
+    this.w = 50;
+    this.h = 75;
     this.posx = posx;
     this.posy = posy;
     this.vx = 0;

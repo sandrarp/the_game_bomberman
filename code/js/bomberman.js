@@ -25,4 +25,6 @@ var initialGrid = [
 ]
 var gameArea = {
     grid: initialGrid,
+    width: 750,
+    height: 550,
 }
