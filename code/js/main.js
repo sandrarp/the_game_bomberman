@@ -14,3 +14,6 @@ document.onkeydown = function(e) {
         break;
     }
   }
+  document.onkeyup = function(e) {
+    game.player.stopWalk();
+  }

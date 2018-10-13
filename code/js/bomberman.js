@@ -10,6 +10,7 @@ function Bomberman() {
 
 Bomberman.prototype.start = function() {
     this.board.defineCells();
+    game.player.draw();
     requestAnimationFrame(loop);
 }
 
@@ -19,7 +20,7 @@ Bomberman.prototype.newLevel = function() {
 
 function loop() {
     game.board.draw();
-    game.player.draw();
+    game.player.update();
     requestAnimationFrame(loop);
 }
 game.start();
