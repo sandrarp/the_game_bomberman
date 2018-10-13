@@ -2,10 +2,10 @@ function Player(game) {
     this.game = game;
     this.w = 50;
     this.h = 75;
-    this.x = this.game.cell.w + vx;
-    this.y = this.game.cell.y + vy;
     this.vx = 0;
     this.vy = 0;
+    this.x = this.game.cellwidth + this.vx;
+    this.y = this.game.cellwidth + this.vy;
     this.livesLeft = 3;
     this.image = new Image();
     this.image.src = 'img/player.png';

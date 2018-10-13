@@ -4,7 +4,8 @@ function Bomberman() {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.board = new Board(this);
-    // this.player = new Player(this);
+    this.cellwidth = 50;
+    this.player = new Player(this);
 }
 
 Bomberman.prototype.start = function() {
@@ -18,6 +19,7 @@ Bomberman.prototype.newLevel = function() {
 
 function loop() {
     game.board.draw();
+    game.player.draw();
     requestAnimationFrame(loop);
 }
 game.start();

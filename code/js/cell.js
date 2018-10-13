@@ -1,7 +1,7 @@
 function Cell(game, x, y) {
     this.game = game;
-    this.w = 50;
-    this.h = 50;
+    this.w = game.cellwidth;
+    this.h = game.cellwidth;
     this.x = this.w * x;
     this.y = this.h * y;
     this.image = new Image();
