@@ -12,8 +12,13 @@ document.onkeydown = function(e) {
       case 39:
         game.player.walkRight();
         break;
+      case 32:
+        game.player.throwBomb();
+        break;
     }
   }
   document.onkeyup = function(e) {
-    game.player.stopWalk();
+      if(e.keyCode !== 32) {
+          game.player.stopWalk();
+      }
   }

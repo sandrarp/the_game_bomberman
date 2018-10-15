@@ -2,6 +2,8 @@ function Player(game) {
     this.game = game;
     this.w = 50;
     this.h = 75;
+    this.anchorx = 25;
+    this.anchory = 50;
     this.vx = 0;
     this.vy = 0;
     this.initx = this.game.cellwidth + this.vx;
@@ -50,7 +52,12 @@ Player.prototype.checkCollision = function() {
 }
 
 Player.prototype.throwBomb = function() {
-
+    var cellx = Math.floor((this.x+ 25)/game.cellwidth);
+    var celly = Math.floor((this.y+50)/game.cellwidth);
+    console.log(game.board.cells[cellx][celly]);
+    var bomb = new Bomb(this.game, cellx, celly);
+    game.board.cells[celly][cellx] = bomb;
+    setTimeout(bomb.explode(), 2000);
 }
 
 Player.prototype.receiveDamage = function() {

@@ -55,6 +55,7 @@ Board.prototype.draw = function() {
     }
 }
 
+
 Board.prototype.update = function() {
 
 }
