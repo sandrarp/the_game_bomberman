@@ -49,40 +49,41 @@ Player.prototype.stopWalk = function() {
 }
 
 Player.prototype.checkBounds = function() {
-    var canvasWidth = (this.game.board.cells[0].length - 1) * this.game.cellwidth;
-    var canvasHeight = (this.game.board.cells.length - 1) * this.game.cellwidth;
-
-    if(cellType(this.x, this.y + this.anchory) == "Block") {
+    var leftCell = getTheCell(this.x, this.y + this.anchory);
+    var rightCell = getTheCell(this.x + this.w - 10, this.y + this.anchory);
+    var topCell = getTheCell(this.x + this.anchorx, this.y + this.anchory);
+    var bottomCell = getTheCell(this.x + this.anchorx, this.y + this.h);
+    
+    if(leftCell.constructor.name == "Block") {
         this.x = this.x + 5;
     }
-    if(cellType(this.x + this.w, this.y + this.anchory) == "Block") {
+    if(rightCell.constructor.name == "Block") {
         this.x = this.x - 5;
     }
 
-    if(cellType(this.x + this.anchorx, this.y + this.anchory) == "Block") {
+    if(topCell.constructor.name == "Block") {
         this.y = this.y + 10;
     }
-    if(cellType(this.x + this.anchorx, this.y + this.h) == "Block") {
+    if(bottomCell.constructor.name == "Block") {
         this.y = this.y - 10;
     }
 }
 
 Player.prototype.throwBomb = function() {
-    var cellx = Math.floor((this.x+ 25)/game.cellwidth);
-    var celly = Math.floor((this.y+50)/game.cellwidth);
-    console.log(game.board.cells[cellx][celly]);
-    console.log(game.board.cells[cellx][celly].constructor.name);
-    var bomb = new Bomb(this.game, cellx, celly);
-    game.board.cells[celly][cellx] = bomb;
-    setTimeout(bomb.explode(), 2000);
+    var cell = getTheCell(this.x + 25, this.y + 50);
+    console.log(cell);
+    var bomb = new Bomb(this.game, cell.cellx, cell.celly);
+    game.board.cells[cell.celly][cell.cellx] = bomb;
+    console.log(game.board.cells[cell.celly][cell.cellx]);
+    // setTimeout(bomb.explode(), 2000);
 }
 
 Player.prototype.receiveDamage = function() {
 
 }
 
-function cellType(x, y) {
+function getTheCell(x, y) {
     var cellx = Math.floor(x/game.cellwidth);
     var celly = Math.floor(y/game.cellwidth);
-    return game.board.cells[celly][cellx].constructor.name;
+    return game.board.cells[celly][cellx];
 }
