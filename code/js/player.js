@@ -24,6 +24,7 @@ Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
     this.game.ctx.drawImage(this.image, this.x, this.y,this.w,this.h);
+    this.checkBounds();
 }
 
 Player.prototype.walkUp = function() {
@@ -47,14 +48,30 @@ Player.prototype.stopWalk = function() {
     this.vy = 0;
 }
 
-Player.prototype.checkCollision = function() {
+Player.prototype.checkBounds = function() {
+    var canvasWidth = (this.game.board.cells[0].length - 1) * this.game.cellwidth;
+    var canvasHeight = (this.game.board.cells.length - 1) * this.game.cellwidth;
 
+    if(cellType(this.x, this.y + this.anchory) == "Block") {
+        this.x = this.x + 5;
+    }
+    if(cellType(this.x + this.w, this.y + this.anchory) == "Block") {
+        this.x = this.x - 5;
+    }
+
+    if(cellType(this.x + this.anchorx, this.y + this.anchory) == "Block") {
+        this.y = this.y + 10;
+    }
+    if(cellType(this.x + this.anchorx, this.y + this.h) == "Block") {
+        this.y = this.y - 10;
+    }
 }
 
 Player.prototype.throwBomb = function() {
     var cellx = Math.floor((this.x+ 25)/game.cellwidth);
     var celly = Math.floor((this.y+50)/game.cellwidth);
     console.log(game.board.cells[cellx][celly]);
+    console.log(game.board.cells[cellx][celly].constructor.name);
     var bomb = new Bomb(this.game, cellx, celly);
     game.board.cells[celly][cellx] = bomb;
     setTimeout(bomb.explode(), 2000);
@@ -64,3 +81,8 @@ Player.prototype.receiveDamage = function() {
 
 }
 
+function cellType(x, y) {
+    var cellx = Math.floor(x/game.cellwidth);
+    var celly = Math.floor(y/game.cellwidth);
+    return game.board.cells[celly][cellx].constructor.name;
+}
