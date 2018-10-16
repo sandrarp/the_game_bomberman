@@ -49,20 +49,22 @@ Player.prototype.stopWalk = function() {
 }
 
 Player.prototype.checkBounds = function() {
-    var canvasWidth = (this.game.board.cells[0].length - 1) * this.game.cellwidth;
-    var canvasHeight = (this.game.board.cells.length - 1) * this.game.cellwidth;
-
-    if(cellType(this.x, this.y + this.anchory) == "Block") {
+    var leftCell = getTheCell(this.x, this.y + this.anchory);
+    var rightCell = getTheCell(this.x + this.w - 10, this.y + this.anchory);
+    var topCell = getTheCell(this.x + this.anchorx, this.y + this.anchory);
+    var bottomCell = getTheCell(this.x + this.anchorx, this.y + this.h);
+    
+    if(leftCell.constructor.name == "Block") {
         this.x = this.x + 5;
     }
-    if(cellType(this.x + this.w, this.y + this.anchory) == "Block") {
+    if(rightCell.constructor.name == "Block") {
         this.x = this.x - 5;
     }
 
-    if(cellType(this.x + this.anchorx, this.y + this.anchory) == "Block") {
+    if(topCell.constructor.name == "Block") {
         this.y = this.y + 10;
     }
-    if(cellType(this.x + this.anchorx, this.y + this.h) == "Block") {
+    if(bottomCell.constructor.name == "Block") {
         this.y = this.y - 10;
     }
 }
@@ -81,8 +83,8 @@ Player.prototype.receiveDamage = function() {
 
 }
 
-function cellType(x, y) {
+function getTheCell(x, y) {
     var cellx = Math.floor(x/game.cellwidth);
     var celly = Math.floor(y/game.cellwidth);
-    return game.board.cells[celly][cellx].constructor.name;
+    return game.board.cells[celly][cellx];
 }
