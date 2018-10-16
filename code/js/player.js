@@ -70,13 +70,12 @@ Player.prototype.checkBounds = function() {
 }
 
 Player.prototype.throwBomb = function() {
-    var cellx = Math.floor((this.x+ 25)/game.cellwidth);
-    var celly = Math.floor((this.y+50)/game.cellwidth);
-    console.log(game.board.cells[cellx][celly]);
-    console.log(game.board.cells[cellx][celly].constructor.name);
-    var bomb = new Bomb(this.game, cellx, celly);
-    game.board.cells[celly][cellx] = bomb;
-    setTimeout(bomb.explode(), 2000);
+    var cell = getTheCell(this.x + 25, this.y + 50);
+    console.log(cell);
+    var bomb = new Bomb(this.game, cell.cellx, cell.celly);
+    game.board.cells[cell.celly][cell.cellx] = bomb;
+    console.log(game.board.cells[cell.celly][cell.cellx]);
+    // setTimeout(bomb.explode(), 2000);
 }
 
 Player.prototype.receiveDamage = function() {
