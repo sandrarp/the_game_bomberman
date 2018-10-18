@@ -1,3 +1,9 @@
+var increment;
+var trackDown = 0;
+var trackLeft = 1;
+var trackRight = 2;
+var trackUp = 3;
+
 function Player(game) {
     this.game = game;
     this.w = 50;
@@ -12,7 +18,18 @@ function Player(game) {
     this.y = this.inity + this.vy;
     this.livesLeft = 3;
     this.image = new Image();
-    this.image.src = 'img/player.png';
+    this.image.src = 'img/sprite-3.png';
+    this.spriteSheetWidth = 54;
+    this.spriteSheetHeight = 120;
+    this.spriteSrcX = 0;
+    this.spriteSrcY = 0;
+    this.spriteCols = 3;
+    this.spriteRows = 4;
+    this.spriteWidth = this.spriteSheetWidth / this.spriteCols; 
+    this.spriteHeight = this.spriteSheetHeight / this.spriteRows;
+    this.spriteCurrentFrame = 0;
+    this.walking = false;
+    this.trackDir = trackDown;
 }
 
 Player.prototype.draw = function() {
@@ -23,23 +40,55 @@ Player.prototype.draw = function() {
 Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
-    this.game.ctx.drawImage(this.image, this.x, this.y,this.w,this.h);
+    // this.game.ctx.drawImage(this.image, this.x, this.y,this.w,this.h);
     this.checkBounds();
+    this.animateSprite();
+}
+
+Player.prototype.updateSprite = function(isWalking) {
+    switch(this.spriteCurrentFrame) {
+        case 0:
+            increment = 1;
+            break;
+        case (this.spriteCols-1): 
+            increment = -1;
+            break;
+        default:
+            break;
+    }
+    // spriteCurrentFrame = ++spriteCurrentFrame % cols; // 1, 2, 3, 4 y 1, 2, 3, 4
+    if(isWalking === true) {
+        this.spriteCurrentFrame = increment + this.spriteCurrentFrame; // 0, 1, 2, 1, 0, 1, 2, 1
+    } else {
+        this.spriteCurrentFrame = 1;
+    }
+
+    this.spriteSrcX = this.spriteCurrentFrame * this.spriteWidth;
+    this.spriteSrcY = this.trackDir * this.spriteHeight;
+}
+
+Player.prototype.animateSprite = function() {
+    this.updateSprite(this.walking);
+    this.game.ctx.drawImage(this.image, this.spriteSrcX, this.spriteSrcY, this.spriteWidth, this.spriteHeight, this.x, this.y, this.w, this.h);
 }
 
 Player.prototype.walkUp = function() {
+    this.trackDir = trackUp;
     this.y -= 10;
 }
 
 Player.prototype.walkDown = function() {
+    this.trackDir = trackDown;
     this.y += 10;
 }
 
 Player.prototype.walkRight = function() {
+    this.trackDir = trackRight;
     this.x += 10;
 }
 
 Player.prototype.walkLeft = function() {
+    this.trackDir = trackLeft;
     this.x -= 10;
 }
 

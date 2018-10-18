@@ -16,9 +16,13 @@ document.onkeydown = function(e) {
         game.player.throwBomb();
         break;
     }
+    if(e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39) {
+      game.player.walking = true;
+    }
   }
   document.onkeyup = function(e) {
       if(e.keyCode !== 32) {
           game.player.stopWalk();
       }
+      game.player.walking = false;
   }
