@@ -100,22 +100,22 @@ Player.prototype.stopWalk = function() {
 }
 
 Player.prototype.checkBounds = function() {
-    var leftCell = getTheCell(this.x, this.y + this.anchory);
-    var rightCell = getTheCell(this.x + this.w - 10, this.y + this.anchory);
-    var topCell = getTheCell(this.x + this.anchorx, this.y + this.anchory);
-    var bottomCell = getTheCell(this.x + this.anchorx, this.y + this.h);
+    var leftCell = getTheCell(this.x, this.y + this.anchory, "undefined", "all");
+    var rightCell = getTheCell(this.x + this.w - 10, this.y + this.anchory, "undefined", "all");
+    var topCell = getTheCell(this.x + this.anchorx, this.y + this.anchory, "all");
+    var bottomCell = getTheCell(this.x + this.anchorx, this.y + this.h, "undefined", "all");
     
-    if(leftCell.constructor.name == "Block") {
+    if(leftCell.constructor.name == "Block" || leftCell.constructor.name == "Wall") {
         this.x = this.x + 5;
     }
-    if(rightCell.constructor.name == "Block") {
+    if(rightCell.constructor.name == "Block" || rightCell.constructor.name == "Wall") {
         this.x = this.x - 5;
     }
 
-    if(topCell.constructor.name == "Block") {
+    if(topCell.constructor.name == "Block" || topCell.constructor.name == "Wall") {
         this.y = this.y + 10;
     }
-    if(bottomCell.constructor.name == "Block") {
+    if(bottomCell.constructor.name == "Block" || bottomCell.constructor.name == "Wall") {
         this.y = this.y - 10;
     }
 }
@@ -133,12 +133,21 @@ Player.prototype.receiveDamage = function() {
 
 }
 
-function getTheCell(x, y, type) {
+function getTheCell(x, y, type, layer) {
     var cellx = Math.floor(x/game.cellwidth);
     var celly = Math.floor(y/game.cellwidth);
-    if(type === "index") {
+    if(type === "index") { // si le paso el parámetro layer = "index", la x y la y que le paso son los index de la baldosa
         cellx = x;
         celly = y;
+    }
+    if(layer === "varElements") {
+        return game.board.varElements[celly][cellx];
+    } 
+    if(layer === "all") {
+        if(game.board.varElements[celly][cellx] != undefined || game.board.varElements[celly][cellx] != null) {
+            console.log("Aqui hay un" + game.board.varElements[celly][cellx]);
+            return game.board.varElements[celly][cellx];
+        }
     }
     return game.board.cells[celly][cellx];
 }
