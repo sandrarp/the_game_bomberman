@@ -48,15 +48,26 @@ Board.prototype.defineCells = function() {
     console.log(this.cells);
 }
 
+Board.prototype.defineVarElements = function(object, i, j) {
+    if(object.constructor.name == "Block") {
+        this.varElements[i][j] = null;
+    }
+    var varElem = this.varElements[i][j];
+    if(varElem !== undefined && varElem !== null) {
+        varElem.draw();
+    }
+}
+
+Board.prototype.buildWalls = function() {
+    
+}
+
 Board.prototype.draw = function() {
     for(var i = 0; i < this.cells.length; i++) {
         for(var j = 0; j < this.cells[i].length; j++) {
             var object = this.cells[i][j];
             object.draw();
-            var varElem = this.varElements[i][j];
-            if(varElem !== undefined) {
-                varElem.draw();
-            }
+            this.defineVarElements(object, i, j);
         }
     }
 }
