@@ -21,6 +21,7 @@ function Board(game) {
     this.game = game;
     this.grid = initialGrid;
     this.cells = [];
+    this.varElements = [];
 }
 
 Board.prototype.defineCells = function() {
@@ -42,6 +43,7 @@ Board.prototype.defineCells = function() {
             }
         }
         this.cells.push(rowCells);
+        this.varElements.push([]);
     }
     console.log(this.cells);
 }
@@ -51,6 +53,10 @@ Board.prototype.draw = function() {
         for(var j = 0; j < this.cells[i].length; j++) {
             var object = this.cells[i][j];
             object.draw();
+            var varElem = this.varElements[i][j];
+            if(varElem !== undefined) {
+                varElem.draw();
+            }
         }
     }
 }
