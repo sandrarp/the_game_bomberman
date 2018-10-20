@@ -42,3 +42,11 @@ Bomb.prototype.explode = function() {
     // var emptyCell = new Cell(this.game, this.celly, this.cellx);
     // game.board.cells[this.celly][this.cellx] = emptyCell;
 }
+
+function Wall() {
+    Cell.call(this, game, x, y);
+    this.image.src = 'img/wall.jpg';
+}
+
+Wall.prototype = Object.create(Cell.prototype);
+Wall.prototype.constructor = Wall;
