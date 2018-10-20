@@ -22,6 +22,7 @@ function Board(game) {
     this.grid = initialGrid;
     this.cells = [];
     this.varElements = [];
+    this.qtyWalls = 8;
 }
 
 Board.prototype.defineCells = function() {
@@ -59,7 +60,19 @@ Board.prototype.defineVarElements = function(object, i, j) {
 }
 
 Board.prototype.buildWalls = function() {
-    
+ // Posiciones random del array varELems y si no es null, colocar wall colocar walls
+    for(var i = 0; i <= this.qtyWalls; i++) {
+        var pos = this.getRandomPos("empty");
+        console.log(pos);
+        if(pos === undefined) {
+            i--;
+            console.log("undefined");
+        } else {
+            var wall = new Wall(game, pos[0], pos[1]);
+            this.varElements[pos[1]][pos[0]] = wall;
+        }
+        console.log(this.varElements);
+    }
 }
 
 Board.prototype.draw = function() {
@@ -68,6 +81,30 @@ Board.prototype.draw = function() {
             var object = this.cells[i][j];
             object.draw();
             this.defineVarElements(object, i, j);
+        }
+    }
+}
+
+Board.prototype.getRandomPos = function(which) {
+    var array = [];
+    var randomX = Math.floor(Math.random() * (this.cells[0].length));
+    var randomY = Math.floor(Math.random() * (this.cells.length));
+    array.push(randomX);
+    array.push(randomY);
+    if(which === "all") {
+        return array;
+    }
+    if(which === "empty") {
+        var objectHere = getTheCell(randomX, randomY, "index");
+        if(objectHere.constructor.name === "Block") {
+            console.log(objectHere);
+            console.log("a block in here");
+            console.log(array);
+            this.getRandomPos("empty");
+        } else {
+            console.log("no objects in here");
+            console.log(array);
+            return array;
         }
     }
 }

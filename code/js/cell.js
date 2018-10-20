@@ -43,7 +43,7 @@ Bomb.prototype.explode = function() {
     // game.board.cells[this.celly][this.cellx] = emptyCell;
 }
 
-function Wall() {
+function Wall(game, x, y) {
     Cell.call(this, game, x, y);
     this.image.src = 'img/wall.jpg';
 }

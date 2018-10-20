@@ -11,6 +11,7 @@ function Bomberman() {
 
 Bomberman.prototype.start = function() {
     this.board.defineCells();
+    this.board.buildWalls();
     game.player.draw();
     requestAnimationFrame(loop);
 }
