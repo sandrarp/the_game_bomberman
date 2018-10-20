@@ -124,8 +124,8 @@ Player.prototype.throwBomb = function() {
     var cell = getTheCell(this.x + 25, this.y + 50);
     console.log(cell);
     var bomb = new Bomb(this.game, cell.cellx, cell.celly);
-    game.board.cells[cell.celly][cell.cellx] = bomb;
-    console.log(game.board.cells[cell.celly][cell.cellx]);
+    game.board.varElements[cell.celly][cell.cellx] = bomb;
+    console.log(game.board.varElements);
     // setTimeout(bomb.explode(), 2000);
 }
 
