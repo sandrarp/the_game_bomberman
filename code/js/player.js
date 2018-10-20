@@ -129,7 +129,7 @@ Player.prototype.throwBomb = function() {
     var that = bomb;
     setTimeout(function(){
         that.explode();
-    }, 3000);
+    }, 2000);
 }
 
 Player.prototype.receiveDamage = function() {

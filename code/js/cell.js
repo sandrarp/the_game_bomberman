@@ -35,7 +35,7 @@ function Bomb(game, x, y) {
     this.image.src = 'img/board-bomb.jpg';
     this.explosion = new Image();
     this.explosion.src = 'img/explosion.png';
-    this.explosionDuration = 1500;
+    this.explosionDuration = 900;
     this.damage = 2;
     this.state = 0;
 }
@@ -44,7 +44,6 @@ Bomb.prototype = Object.create(Cell.prototype);
 Bomb.prototype.constructor = Bomb;
 
 Bomb.prototype.draw = function () {
-    console.log(this.state);
     if (this.state === 0) {
         this.game.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
     } else {
@@ -62,8 +61,23 @@ Bomb.prototype.explode = function () {
         console.log("EXPLOTADO");
         clearInterval(int);
         console.log("XY:  " + that.cellx + ", " + that.celly);
+        that.destroy();
         that.game.board.varElements[that.celly][that.cellx] = undefined;
     }, that.explosionDuration);
+}
+
+Bomb.prototype.destroy = function () {
+    var repeatTimes = this.damage * 2 + 1;
+    for (var i = 0; i < repeatTimes; i++) {
+        var cellIndex = i - this.damage;
+        var objX = getTheCell(this.cellx + cellIndex, this.celly, "index", "all");
+        var objY = getTheCell(this.cellx, this.celly + cellIndex, "index", "all");
+        if(objX.constructor.name == "Wall" || objY.constructor.name == "Wall") {
+            this.game.board.varElements[objX.celly][objX.cellx] = undefined;
+            this.game.board.varElements[objY.celly][objY.cellx] = undefined;
+        }
+        // this.game.board.varElements[this.cellx][this.celly + cellIndex] = undefined;
+    }
 }
 
 
