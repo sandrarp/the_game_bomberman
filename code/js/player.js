@@ -126,7 +126,10 @@ Player.prototype.throwBomb = function() {
     var bomb = new Bomb(this.game, cell.cellx, cell.celly);
     game.board.varElements[cell.celly][cell.cellx] = bomb;
     console.log(game.board.varElements);
-    // setTimeout(bomb.explode(), 2000);
+    var that = bomb;
+    setTimeout(function(){
+        that.explode();
+    }, 3000);
 }
 
 Player.prototype.receiveDamage = function() {
@@ -145,7 +148,6 @@ function getTheCell(x, y, type, layer) {
     } 
     if(layer === "all") {
         if(game.board.varElements[celly][cellx] != undefined || game.board.varElements[celly][cellx] != null) {
-            console.log("Aqui hay un" + game.board.varElements[celly][cellx]);
             return game.board.varElements[celly][cellx];
         }
     }
