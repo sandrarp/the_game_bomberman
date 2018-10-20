@@ -133,8 +133,12 @@ Player.prototype.receiveDamage = function() {
 
 }
 
-function getTheCell(x, y) {
+function getTheCell(x, y, type) {
     var cellx = Math.floor(x/game.cellwidth);
     var celly = Math.floor(y/game.cellwidth);
+    if(type === "index") {
+        cellx = x;
+        celly = y;
+    }
     return game.board.cells[celly][cellx];
 }
