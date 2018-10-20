@@ -6,6 +6,7 @@ function Bomberman() {
     this.board = new Board(this);
     this.cellwidth = 50;
     this.player = new Player(this);
+    this.frame = 0;
 }
 
 Bomberman.prototype.start = function() {
@@ -22,5 +23,7 @@ function loop() {
     game.board.draw();
     game.player.update();
     requestAnimationFrame(loop);
+    game.frame++;
 }
+
 game.start();

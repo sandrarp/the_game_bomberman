@@ -68,7 +68,9 @@ Player.prototype.updateSprite = function(isWalking) {
 }
 
 Player.prototype.animateSprite = function() {
-    this.updateSprite(this.walking);
+    if(Number.isInteger(game.frame / 10)) {
+        this.updateSprite(this.walking);
+    }
     this.game.ctx.drawImage(this.image, this.spriteSrcX, this.spriteSrcY, this.spriteWidth, this.spriteHeight, this.x, this.y, this.w, this.h);
 }
 
