@@ -31,3 +31,13 @@ body {
 .game-screen .container img {
     width: 80%;
 }
+
+.points {
+    color: #fff;
+    position: absolute;
+    display: flex;
+}
+
+.lives {
+    
+}

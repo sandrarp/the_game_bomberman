@@ -1,4 +1,10 @@
-document.onkeydown = function(e) {
+var game = new Bomberman();
+window.onload = function() {
+  game.start();
+
+
+
+  document.onkeydown = function(e) {
     switch (e.keyCode) {
       case 38:
         game.player.walkUp();
@@ -26,3 +32,4 @@ document.onkeydown = function(e) {
       }
       game.player.walking = false;
   }
+}
