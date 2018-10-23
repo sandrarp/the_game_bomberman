@@ -1,4 +1,10 @@
 var game = new Bomberman();
+var keymap = {
+  up: false,
+  down: false,
+  left: false,
+  right: false,
+}
 window.onload = function() {
   game.start();
 
@@ -7,19 +13,16 @@ window.onload = function() {
   document.onkeydown = function(e) {
     switch (e.keyCode) {
       case 38:
-        game.player.walkUp();
+        keymap.up = true;
         break;
       case 40:
-        game.player.walkDown();
+        keymap.down = true;
         break;
       case 37:
-        game.player.walkLeft();
+        keymap.left = true;
         break;
       case 39:
-        game.player.walkRight();
-        break;
-      case 32:
-        game.player.throwBomb();
+        keymap.right = true;
         break;
     }
     if(e.keyCode == 38 || e.keyCode == 40 || e.keyCode == 37 || e.keyCode == 39) {
@@ -27,9 +30,23 @@ window.onload = function() {
     }
   }
   document.onkeyup = function(e) {
-      if(e.keyCode !== 32) {
-          game.player.stopWalk();
+      switch (e.keyCode) {
+        case 38:
+          keymap.up = false;
+          break;
+        case 40:
+          keymap.down = false;
+          break;
+        case 37:
+          keymap.left = false;
+          break;
+        case 39:
+          keymap.right = false;
+          break;
+        case 32:
+          game.player.throwBomb();
+          break;
       }
-      game.player.walking = false;
+      if(!keymap.down && !keymap.up && !keymap.right && !keymap.leftdown) game.player.walking = false;
   }
 }

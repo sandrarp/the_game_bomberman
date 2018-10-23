@@ -46,13 +46,12 @@ Bomb.prototype.constructor = Bomb;
 
 Bomb.prototype.draw = function () {
     console.log(this.game.ctx);
-    this.game.ctx.drawImage(this.explosion, 100, 100, 250, 250);
 
-/*     if (this.state === 0) {
+    if (this.state === 0) {
         this.game.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
     } else {
         this.game.ctx.drawImage(this.explosion, this.x - (this.w * this.damage), this.y - (this.h * this.damage), this.w * ((this.damage * 2) + 1), this.h * ((this.damage * 2) + 1));
-    } */
+    }
 }
 
 Bomb.prototype.explode = function () {

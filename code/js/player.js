@@ -45,6 +45,7 @@ Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
     // this.game.ctx.drawImage(this.image, this.x, this.y,this.w,this.h);
+    this.walk();
     this.checkBounds();
     this.animateSprite();
 }
@@ -72,9 +73,6 @@ Player.prototype.updateSprite = function(isWalking) {
 }
 
 Player.prototype.animateSprite = function() {
-    if(Number.isInteger(game.frame / 10)) {
-        this.updateSprite(this.walking);
-    }
     if(this.alive) {
         this.game.ctx.drawImage(this.image, this.spriteSrcX, this.spriteSrcY, this.spriteWidth, this.spriteHeight, this.x, this.y, this.w, this.h);
     } else {
@@ -82,24 +80,35 @@ Player.prototype.animateSprite = function() {
     }
 }
 
+Player.prototype.walk = function() {
+    if(keymap.up) this.walkUp();
+    if(keymap.down) this.walkDown();
+    if(keymap.left) this.walkLeft();
+    if(keymap.right) this.walkRight();
+    if(keymap.up || keymap.down || keymap.left ||keymap.right) {
+        if(Number.isInteger(game.frame / 10)) this.updateSprite(this.walking);
+    }
+    
+}
+
 Player.prototype.walkUp = function() {
     this.trackDir = trackUp;
-    this.y -= 10;
+    this.y -= 4;
 }
 
 Player.prototype.walkDown = function() {
     this.trackDir = trackDown;
-    this.y += 10;
+    this.y += 4;
 }
 
 Player.prototype.walkRight = function() {
     this.trackDir = trackRight;
-    this.x += 10;
+    this.x += 4;
 }
 
 Player.prototype.walkLeft = function() {
     this.trackDir = trackLeft;
-    this.x -= 10;
+    this.x -= 4;
 }
 
 Player.prototype.stopWalk = function() {
@@ -114,17 +123,17 @@ Player.prototype.checkBounds = function() {
     var bottomCell = getTheCell(this.x + this.anchorx, this.y + this.h, "undefined", "all");
     
     if(leftCell.constructor.name == "Block" || leftCell.constructor.name == "Wall") {
-        this.x = this.x + 5;
+        this.x = this.x + 4;
     }
     if(rightCell.constructor.name == "Block" || rightCell.constructor.name == "Wall") {
-        this.x = this.x - 5;
+        this.x = this.x - 4;
     }
 
     if(topCell.constructor.name == "Block" || topCell.constructor.name == "Wall") {
-        this.y = this.y + 10;
+        this.y = this.y + 4;
     }
     if(bottomCell.constructor.name == "Block" || bottomCell.constructor.name == "Wall") {
-        this.y = this.y - 10;
+        this.y = this.y - 4;
     }
 }
 
@@ -144,6 +153,15 @@ Player.prototype.receiveDamage = function() {
     this.livesLeft--;
     this.alive = false;
     // alert("You die! You have " + this.livesLeft + " lives left!!");
+    if(this.livesLeft > 0) {
+        this.revive();
+    } else {
+        this.game.gameOver();
+    }
+}
+
+Player.prototype.revive = function() {
+    
 }
 
 function getTheCell(x, y, type, layer) {
