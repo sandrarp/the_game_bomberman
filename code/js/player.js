@@ -3,6 +3,7 @@ var trackDown = 0;
 var trackLeft = 1;
 var trackRight = 2;
 var trackUp = 3;
+var trackDeath = 4;
 
 function Player(game) {
     this.game = game;
@@ -18,9 +19,11 @@ function Player(game) {
     this.y = this.inity + this.vy;
     this.livesLeft = 3;
     this.image = new Image();
-    this.image.src = 'img/sprite-3.png';
-    this.spriteSheetWidth = 54;
-    this.spriteSheetHeight = 120;
+    this.image.src = 'img/sprite-3.png'; // sprite-player-hd.png
+    this.death = new Image();
+    this.death.src = 'img/death.png';
+    this.spriteSheetWidth = 54; // 54 217
+    this.spriteSheetHeight = 120; // 120 481
     this.spriteSrcX = 0;
     this.spriteSrcY = 0;
     this.spriteCols = 3;
@@ -29,6 +32,7 @@ function Player(game) {
     this.spriteHeight = this.spriteSheetHeight / this.spriteRows;
     this.spriteCurrentFrame = 0;
     this.walking = false;
+    this.alive = true;
     this.trackDir = trackDown;
 }
 
@@ -71,7 +75,11 @@ Player.prototype.animateSprite = function() {
     if(Number.isInteger(game.frame / 10)) {
         this.updateSprite(this.walking);
     }
-    this.game.ctx.drawImage(this.image, this.spriteSrcX, this.spriteSrcY, this.spriteWidth, this.spriteHeight, this.x, this.y, this.w, this.h);
+    if(this.alive) {
+        this.game.ctx.drawImage(this.image, this.spriteSrcX, this.spriteSrcY, this.spriteWidth, this.spriteHeight, this.x, this.y, this.w, this.h);
+    } else {
+        this.game.ctx.drawImage(this.death, 0, 0, this.spriteWidth, this.spriteHeight, this.x, this.y, this.w, this.h);
+    }
 }
 
 Player.prototype.walkUp = function() {
@@ -133,7 +141,9 @@ Player.prototype.throwBomb = function() {
 }
 
 Player.prototype.receiveDamage = function() {
-
+    this.livesLeft--;
+    this.alive = false;
+    // alert("You die! You have " + this.livesLeft + " lives left!!");
 }
 
 function getTheCell(x, y, type, layer) {
