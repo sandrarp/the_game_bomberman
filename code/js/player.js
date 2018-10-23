@@ -81,14 +81,15 @@ Player.prototype.animateSprite = function() {
 }
 
 Player.prototype.walk = function() {
-    if(keymap.up) this.walkUp();
-    if(keymap.down) this.walkDown();
-    if(keymap.left) this.walkLeft();
-    if(keymap.right) this.walkRight();
-    if(keymap.up || keymap.down || keymap.left ||keymap.right) {
-        if(Number.isInteger(game.frame / 10)) this.updateSprite(this.walking);
+   if(this.alive) {
+        if(keymap.up) this.walkUp();
+        if(keymap.down) this.walkDown();
+        if(keymap.left) this.walkLeft();
+        if(keymap.right) this.walkRight();
+        if(keymap.up || keymap.down || keymap.left ||keymap.right) {
+            if(Number.isInteger(game.frame / 10)) this.updateSprite(this.walking);
+        }
     }
-    
 }
 
 Player.prototype.walkUp = function() {
@@ -152,16 +153,23 @@ Player.prototype.throwBomb = function() {
 Player.prototype.receiveDamage = function() {
     this.livesLeft--;
     this.alive = false;
+    var that = this;
     // alert("You die! You have " + this.livesLeft + " lives left!!");
     if(this.livesLeft > 0) {
-        this.revive();
+        setTimeout(function(){
+            that.revive();
+        }, 2000);
     } else {
         this.game.gameOver();
     }
 }
 
 Player.prototype.revive = function() {
-    
+    this.alive = true;
+    this.x = this.initx;
+    this.y = this.inity;
+    this.trackDir = trackDown;
+    this.updateSprite();
 }
 
 function getTheCell(x, y, type, layer) {
