@@ -56,6 +56,7 @@ Bomb.prototype.explode = function () {
     var that = this;
     this.state = 1;
     this.calculateExplosionRange();
+    this.destroy();
     var int = setInterval(function () {
         console.log("explotando");
         that.kill(this.game.player);
@@ -64,7 +65,6 @@ Bomb.prototype.explode = function () {
     setTimeout(function () {
         console.log("EXPLOTADO");
         clearInterval(int);
-        that.destroy();
         that.game.board.varElements[that.celly][that.cellx] = undefined;
     }, that.explosionDuration);
 }
