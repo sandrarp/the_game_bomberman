@@ -45,8 +45,6 @@ Bomb.prototype = Object.create(Cell.prototype);
 Bomb.prototype.constructor = Bomb;
 
 Bomb.prototype.draw = function () {
-    console.log(this.game.ctx);
-
     if (this.state === 0) {
         this.game.ctx.drawImage(this.image, this.x, this.y, this.w, this.h);
     } else {
