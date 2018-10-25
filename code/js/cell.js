@@ -60,7 +60,8 @@ Bomb.prototype.explode = function () {
     this.calculateExplosionRange();
     var int = setInterval(function () {
         console.log("explotando");
-        that.kill();
+        that.kill(this.game.player);
+        that.kill(this.game.enemy);
     }, 10);
     setTimeout(function () {
         console.log("EXPLOTADO");
@@ -93,13 +94,13 @@ Bomb.prototype.destroy = function () {
     })
 }
 
-Bomb.prototype.kill = function() {
-    var px = game.player.x + game.player.anchorx;
-    var py = game.player.y + game.player.anchory;
+Bomb.prototype.kill = function(thePlayer) {
+    var px = thePlayer.x + thePlayer.anchorx;
+    var py = thePlayer.y + thePlayer.anchory;
     var playerCell = getTheCell(px, py);
     [].forEach.call(this.explosionRange, function(cell) {
-        if(playerCell.cellx === cell[0] && playerCell.celly === cell[1] && game.player.alive) {
-            this.game.player.receiveDamage();
+        if(playerCell.cellx === cell[0] && playerCell.celly === cell[1] && thePlayer.alive) {
+            thePlayer.receiveDamage();
         }
     })
 }

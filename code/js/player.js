@@ -20,7 +20,7 @@ function Player(game) {
     this.image = new Image();
     this.image.src = 'img/sprite-player-hd.png'; // sprite-3.png sprite-player-hd.png
     this.death = new Image();
-    this.death.src = 'img/death.png';
+    this.death.src = 'img/player-death-hd.png';
     this.spriteSheetWidth = 217; // 54 217
     this.spriteSheetHeight = 481; // 120 481
     this.spriteSrcX = 0;
@@ -158,7 +158,7 @@ Player.prototype.receiveDamage = function() {
     updateCount("player", this.livesLeft);
     if(this.livesLeft > 0) {
         setTimeout(function(){
-            that.revive();
+            (that.constructor.name === "Player") ? that.revive() : that.remove();
         }, 2000);
     } else {
         this.game.gameOver();

@@ -48,3 +48,7 @@ Enemy.prototype.walkAuto = function () {
         this.walkLeft();
     }
 }
+
+Enemy.prototype.remove = function () {
+    this.alive = false;
+}
