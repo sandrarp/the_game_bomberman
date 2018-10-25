@@ -75,10 +75,10 @@ Bomb.prototype.calculateExplosionRange = function() {
     var repeatTimes = this.damage * 2 + 1;
     for (var i = 0; i < repeatTimes; i++) {
         var cellIndex = i - this.damage;
-        if(i !== this.damage &&  this.cellx + cellIndex > 0) {
+        if(i !== this.damage &&  this.cellx + cellIndex > 0 && this.cellx + cellIndex < 14) {
             this.explosionRange.push([this.cellx + cellIndex, this.celly]);
         }
-        if(this.celly + cellIndex > 0) {
+        if(this.celly + cellIndex > 0 && this.celly + cellIndex < 10) {
             this.explosionRange.push([this.cellx, this.celly + cellIndex]);
         }
     }
