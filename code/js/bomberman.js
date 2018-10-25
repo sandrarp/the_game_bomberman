@@ -25,6 +25,7 @@ Bomberman.prototype.gameOver = function() {
 
 function loop() {
     game.board.draw();
+    game.board.drawLayerVarElements();
     game.player.update();
     if(game.enemy.alive) game.enemy.update();
     game.frame++;
