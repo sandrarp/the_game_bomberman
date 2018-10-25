@@ -15,6 +15,7 @@ function Player(game) {
     this.inity = this.game.cellwidth- 30;
     this.x = this.initx;
     this.y = this.inity;
+    this.vel = 4;
     this.livesLeft = 3;
     this.image = new Image();
     this.image.src = 'img/sprite-player-hd.png'; // sprite-3.png sprite-player-hd.png
@@ -34,10 +35,10 @@ function Player(game) {
     this.trackDir = trackDown;
 }
 
-Player.prototype.draw = function() {
-    this.game.ctx.drawImage(this.image, this.initx, this.inity,this.w,this.h);
-    console.log(this);
-}
+// Player.prototype.draw = function() {
+//     this.game.ctx.drawImage(this.image, this.initx, this.inity,this.w,this.h);
+//     console.log(this);
+// }
 
 Player.prototype.update = function() {
     this.x = this.x;
@@ -92,22 +93,22 @@ Player.prototype.walk = function() {
 
 Player.prototype.walkUp = function() {
     this.trackDir = trackUp;
-    this.y -= 4;
+    this.y -= this.vel;
 }
 
 Player.prototype.walkDown = function() {
     this.trackDir = trackDown;
-    this.y += 4;
+    this.y += this.vel;
 }
 
 Player.prototype.walkRight = function() {
     this.trackDir = trackRight;
-    this.x += 4;
+    this.x += this.vel;
 }
 
 Player.prototype.walkLeft = function() {
     this.trackDir = trackLeft;
-    this.x -= 4;
+    this.x -= this.vel;
 }
 
 Player.prototype.checkBounds = function() {
@@ -115,20 +116,26 @@ Player.prototype.checkBounds = function() {
     var rightCell = getTheCell(this.x + this.w - 10, this.y + this.anchory, "undefined", "all");
     var topCell = getTheCell(this.x + this.anchorx, this.y + this.anchory, "all");
     var bottomCell = getTheCell(this.x + this.anchorx, this.y + this.h, "undefined", "all");
+    var blockPos = undefined;
     
     if(leftCell.constructor.name == "Block" || leftCell.constructor.name == "Wall") {
-        this.x = this.x + 4;
+        this.x = this.x + this.vel;
+        blockPos = "left";
     }
     if(rightCell.constructor.name == "Block" || rightCell.constructor.name == "Wall") {
-        this.x = this.x - 4;
+        this.x = this.x - this.vel;
+        blockPos = "right";
     }
 
     if(topCell.constructor.name == "Block" || topCell.constructor.name == "Wall") {
-        this.y = this.y + 4;
+        this.y = this.y + this.vel;
+        blockPos = "top";
     }
     if(bottomCell.constructor.name == "Block" || bottomCell.constructor.name == "Wall") {
-        this.y = this.y - 4;
+        this.y = this.y - this.vel;
+        blockPos = "bottom";
     }
+    return blockPos;
 }
 
 Player.prototype.throwBomb = function() {
@@ -148,6 +155,7 @@ Player.prototype.receiveDamage = function() {
     this.alive = false;
     var that = this;
     // alert("You die! You have " + this.livesLeft + " lives left!!");
+    updateCount("player", this.livesLeft);
     if(this.livesLeft > 0) {
         setTimeout(function(){
             that.revive();

@@ -1,11 +1,13 @@
 function Enemy(game, pos) {
     Player.call(this, game);
     this.image.src = 'img/sprite-enemy.png';
+    this.vel = Math.random() * (8 - 1) + 1;
     this.positions = [[50*9,350]];
-    this.initx = this.positions[pos][1];
-    this.inity = this.positions[pos][0];
+    this.x = this.positions[pos][1];
+    this.y = this.positions[pos][0] - this.anchory;
     this.walkDir = true;
     this.walking = true;
+
 }
 
 Enemy.prototype = Object.create(Player.prototype);
@@ -25,17 +27,18 @@ Enemy.prototype.kill = function () {
 
 Enemy.prototype.update = function () {
     console.log("Enemy " + this.x);
-    this.walkAuto();
+    this.walk();
 }
 
 Enemy.prototype.walk = function() {
     this.walkAuto();
+    this.checkBounds();
     this.animateSprite();
  }
 
 Enemy.prototype.walkAuto = function () {
     console.log(this.walkDir);
-    if(Number.isInteger(game.frame / 200)) {
+    if(Number.isInteger(game.frame / 100)) {
         this.updateSprite(this.walking);
         this.walkDir = !this.walkDir;
     }

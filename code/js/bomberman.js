@@ -11,8 +11,7 @@ function Bomberman() {
 Bomberman.prototype.start = function() {
     this.board.defineCells();
     this.board.buildWalls();
-    this.player.draw();
-    this.enemy.draw();
+    updateCount("player", this.player.livesLeft);
     requestAnimationFrame(loop);
 }
 
@@ -21,14 +20,13 @@ Bomberman.prototype.newLevel = function() {
 }
 
 Bomberman.prototype.gameOver = function() {
-
+    document.getElementById("game-over-screen").classList.remove('hidden');
 }
 
 function loop() {
     game.board.draw();
     game.player.update();
-    game.enemy.draw();
-    game.enemy.update();
+     game.enemy.update();
     game.frame++;
     requestAnimationFrame(loop);
   }
