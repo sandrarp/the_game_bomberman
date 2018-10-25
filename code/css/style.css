@@ -34,10 +34,11 @@ body {
 
 .points {
     color: #fff;
-    position: absolute;
     display: flex;
+    position: absolute;
+    width: 750px;
 }
 
 .lives {
-    
+
 }

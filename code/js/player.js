@@ -11,19 +11,17 @@ function Player(game) {
     this.h = 75;
     this.anchorx = 25;
     this.anchory = 50;
-    this.vx = 0;
-    this.vy = 0;
-    this.initx = this.game.cellwidth + this.vx;
-    this.inity = this.game.cellwidth + this.vy - 30;
+    this.initx = this.game.cellwidth;
+    this.inity = this.game.cellwidth- 30;
     this.x = this.initx;
-    this.y = this.inity + this.vy;
+    this.y = this.inity;
     this.livesLeft = 3;
     this.image = new Image();
-    this.image.src = 'img/sprite-3.png'; // sprite-player-hd.png
+    this.image.src = 'img/sprite-player-hd.png'; // sprite-3.png sprite-player-hd.png
     this.death = new Image();
     this.death.src = 'img/death.png';
-    this.spriteSheetWidth = 54; // 54 217
-    this.spriteSheetHeight = 120; // 120 481
+    this.spriteSheetWidth = 217; // 54 217
+    this.spriteSheetHeight = 481; // 120 481
     this.spriteSrcX = 0;
     this.spriteSrcY = 0;
     this.spriteCols = 3;
@@ -110,11 +108,6 @@ Player.prototype.walkRight = function() {
 Player.prototype.walkLeft = function() {
     this.trackDir = trackLeft;
     this.x -= 4;
-}
-
-Player.prototype.stopWalk = function() {
-    this.vx = 0;
-    this.vy = 0;
 }
 
 Player.prototype.checkBounds = function() {
