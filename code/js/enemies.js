@@ -4,7 +4,7 @@ function Enemy(game, pos) {
     this.vel = Math.random() * (8 - 1) + 1;
     this.positions = [[50*9,350]];
     this.x = this.positions[pos][1];
-    this.y = this.positions[pos][0] - this.anchory;
+    this.y = this.positions[pos][0] - (this.h  - this.anchory);
     this.walkDir = true;
     this.walking = true;
 
