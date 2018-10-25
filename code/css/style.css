@@ -3,6 +3,8 @@ body {
     width: 100%;
     height: 100%;
     margin: 0;
+    color: white;
+    font-family: bomberman;
 }
 
 .main-content, .game-screen .container  {
@@ -18,14 +20,38 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
+    background: black;
+    z-index: 1;
 }
 
 .game-screen .container {
     flex-direction: column;
 }
 
-#start-screen {
+.game-screen.hidden {
     display: none;
+}
+
+.game-title {
+    color: #d20493;
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.game-subtitle {
+    margin-bottom: 36px;
+}
+
+.btn {
+    background: #e50097;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 3px;
+    font-family: bomberman-secondary;
+    text-transform: uppercase;
+    color: white;
+    cursor: pointer;
+    cursor: url(../img/cursor-bomb.png), pointer;
 }
 
 .game-screen .container img {
@@ -35,10 +61,25 @@ body {
 .points {
     color: #fff;
     display: flex;
+    justify-content: right;
+    align-items: center;
     position: absolute;
     width: 750px;
+    height: 50px;
+    margin-top: -50px;
+    text-align: right;
 }
 
 .lives {
+    flex: 1;
+}
 
+@font-face {
+    font-family: bomberman;
+    src: url(../fonts/04B_30__.TTF);
+}
+
+@font-face {
+    font-family: bomberman-secondary;
+    src: url(../fonts/Retron2000.ttf);
 }

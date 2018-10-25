@@ -32,7 +32,7 @@ Block.prototype.receiveDamage = function () {
 
 function Bomb(game, x, y) {
     Cell.call(this, game, x, y);
-    this.image.src = 'img/board-bomb.jpg';
+    this.image.src = 'img/board-bomb.png';
     this.explosion = new Image();
     this.explosion.src = 'img/explosion.png';
     this.explosionDuration = 900;

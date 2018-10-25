@@ -11,18 +11,28 @@
     <div class="main-content">
         <div id="start-screen" class="game-screen">
             <div class="container">
-                <img src="img/bomberman-init.jpg" alt="">
-                <button id="start-btn">New Game</button>
+                <h1 class="game-title">BOMBERMAN</h1>
+                <p class="game-subtitle">Click the button to start</p>
+                <button id="start-btn" class="btn">New Game</button>
+            </div>
+        </div>
+        <div id="game-over-screen" class="game-screen hidden">
+            <div class="container">
+                <h1 class="game-title">GAME OVER</h1>
+                <p class="game-subtitle">Click the button to restart</p>
+                <!-- <img src="img/bomberman-init.jpg" alt=""> -->
+                <button id="start-btn" class="btn">New Game</button>
             </div>
         </div>
         <div id="game-board">
             <div class="points">
                 <img src="" alt="">
-                <p class="lives">3</p>
+                <p class="lives">Lives left: <span id="player"></span></p>
             </div>
             <canvas id="canvas" width="750" height="550"></canvas>
         </div>
     </div>
+    <script src="js/functions.js"></script>
     <script src="js/board.js"></script>
     <script src="js/player.js"></script>
     <script src="js/enemies.js"></script>

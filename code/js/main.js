@@ -1,4 +1,13 @@
-var game = new Bomberman();
+var btnStart = document.getElementById('start-btn');
+var game;
+
+btnStart.onclick = function(e) {
+  game = new Bomberman();
+  game.start();
+  document.getElementById('start-screen').classList.add('hidden');
+  document.getElementById("game-over-screen").classList.add('hidden');
+}
+
 var keymap = {
   up: false,
   down: false,
@@ -6,9 +15,6 @@ var keymap = {
   right: false,
 }
 window.onload = function() {
-  game.start();
-
-
 
   document.onkeydown = function(e) {
     switch (e.keyCode) {
