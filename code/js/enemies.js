@@ -26,7 +26,6 @@ Enemy.prototype.kill = function () {
 }
 
 Enemy.prototype.update = function () {
-    console.log("Enemy " + this.x);
     this.walk();
 }
 
@@ -37,7 +36,6 @@ Enemy.prototype.walk = function() {
  }
 
 Enemy.prototype.walkAuto = function () {
-    console.log(this.walkDir);
     if(Number.isInteger(game.frame / 100)) {
         this.updateSprite(this.walking);
         this.walkDir = !this.walkDir;
