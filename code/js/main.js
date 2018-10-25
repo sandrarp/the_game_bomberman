@@ -53,6 +53,6 @@ window.onload = function() {
           game.player.throwBomb();
           break;
       }
-      if(!keymap.down && !keymap.up && !keymap.right && !keymap.leftdown) game.player.walking = false;
+      if(!keymap.down && !keymap.up && !keymap.right && !keymap.leftdown && game) game.player.walking = false;
   }
 }
