@@ -5,6 +5,7 @@ function Bomberman() {
     this.cellwidth = 50;
     this.player = new Player(this);
     this.enemy = new Enemy(this, 0);
+    this.enemy1 = new Enemy(this, 1);
     this.frame = 0;
 }
 
@@ -28,6 +29,7 @@ function loop() {
     game.board.drawLayerVarElements();
     game.player.update();
     if(game.enemy.alive) game.enemy.update();
+    if(game.enemy1.alive) game.enemy1.update();
     game.frame++;
     requestAnimationFrame(loop);
   }

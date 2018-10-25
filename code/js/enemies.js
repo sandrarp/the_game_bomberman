@@ -1,8 +1,9 @@
 function Enemy(game, pos) {
     Player.call(this, game);
-    this.image.src = 'img/sprite-enemy.png';
+    this.arrayImgs = ['img/sprite-enemy.png', 'img/sprite-enemy.png'];
+    this.image.src = this.arrayImgs[pos];
     this.vel = Math.random() * (8 - 1) + 1;
-    this.positions = [[50*9,350]];
+    this.positions = [[50*9,350], [50, 400]];
     this.x = this.positions[pos][1];
     this.y = this.positions[pos][0] - (this.h  - this.anchory);
     this.walkDir = true;
