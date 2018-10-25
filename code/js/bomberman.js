@@ -6,12 +6,14 @@ function Bomberman() {
     this.player = new Player(this);
     this.enemy = new Enemy(this, 0);
     this.enemy1 = new Enemy(this, 1);
+    this.music = new Music();
     this.frame = 0;
 }
 
 Bomberman.prototype.start = function() {
     this.board.defineCells();
     this.board.buildWalls();
+    this.music.ambient.play();
     updateCount("player", this.player.livesLeft);
     requestAnimationFrame(loop);
 }

@@ -135,6 +135,9 @@ Player.prototype.checkBounds = function() {
         this.y = this.y - this.vel;
         blockPos = "bottom";
     }
+    if(blockPos && this.walking) {
+        this.game.music.collision.play();
+    }
     return blockPos;
 }
 
