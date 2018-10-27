@@ -29,6 +29,7 @@ Enemy.prototype.kill = function () {
 Enemy.prototype.update = function () {
     this.walk();
     this.animateSprite();
+    this.kill();
 }
 
 Enemy.prototype.walk = function() {
