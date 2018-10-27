@@ -1,23 +1,27 @@
 var btnStart = document.getElementById('start-btn');
 var game;
-
-/* btnStart.onclick = function(e) {
-  game = new Bomberman();
-  game.start();
-  document.getElementById('start-screen').classList.add('hidden');
-  document.getElementById("game-over-screen").classList.add('hidden');
-} */
 var btns = document.getElementsByClassName("btn-start");
+var level = 1;
+var loopId;
+var gameState = 1;
 
 
 for(var i = 0; i < btns.length; i++) {
   btns[i].onclick = function(e) {
-    game = new Bomberman();
+    if(!this.classList.contains('next-level')) {
+      level = 1;
+    } else {
+      level = level+1;
+    }
+    updateCount('level', level);
+    game = new Bomberman(level);
     game.start();
+    console.log(game.board.qtyWalls);
+      console.log(game.level);
     document.getElementById('start-screen').classList.add('hidden');
     document.getElementById("game-over-screen").classList.add('hidden');
     document.getElementById("game-win").classList.add('hidden');
-    
+
   }
 }
 

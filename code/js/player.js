@@ -15,7 +15,7 @@ function Player(game) {
     this.inity = this.game.cellwidth- 30;
     this.x = this.initx;
     this.y = this.inity;
-    this.vel = 4;
+    this.vel = 3 + this.game.level;
     this.livesLeft = 3;
     this.image = new Image();
     this.image.src = 'img/sprite-player-hd.png'; // sprite-3.png sprite-player-hd.png
@@ -155,7 +155,6 @@ Player.prototype.receiveDamage = function() {
     this.livesLeft--;
     this.alive = false;
     var that = this;
-    // alert("You die! You have " + this.livesLeft + " lives left!!");
     updateCount("player", this.livesLeft);
     if(this.livesLeft > 0) {
         setTimeout(function(){
@@ -163,6 +162,7 @@ Player.prototype.receiveDamage = function() {
         }, 2000);
     } else {
         this.game.gameOver();
+        gameState = 0;
     }
 }
 

@@ -22,7 +22,7 @@ function Board(game) {
     this.grid = initialGrid;
     this.cells = [];
     this.varElements = [];
-    this.qtyWalls = 8;
+    this.qtyWalls = 8 + this.game.level;
 }
 
 Board.prototype.defineCells = function() {
