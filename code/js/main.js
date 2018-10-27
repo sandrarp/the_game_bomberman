@@ -16,6 +16,7 @@ for(var i = 0; i < btns.length; i++) {
     game.start();
     document.getElementById('start-screen').classList.add('hidden');
     document.getElementById("game-over-screen").classList.add('hidden');
+    document.getElementById("game-win").classList.add('hidden');
     
   }
 }
