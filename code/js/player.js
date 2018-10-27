@@ -11,19 +11,18 @@ function Player(game) {
     this.h = 75;
     this.anchorx = 25;
     this.anchory = 50;
-    this.vx = 0;
-    this.vy = 0;
-    this.initx = this.game.cellwidth + this.vx;
-    this.inity = this.game.cellwidth + this.vy - 30;
+    this.initx = this.game.cellwidth;
+    this.inity = this.game.cellwidth- 30;
     this.x = this.initx;
-    this.y = this.inity + this.vy;
+    this.y = this.inity;
+    this.vel = 4;
     this.livesLeft = 3;
     this.image = new Image();
-    this.image.src = 'img/sprite-3.png'; // sprite-player-hd.png
+    this.image.src = 'img/sprite-player-hd.png'; // sprite-3.png sprite-player-hd.png
     this.death = new Image();
-    this.death.src = 'img/death.png';
-    this.spriteSheetWidth = 54; // 54 217
-    this.spriteSheetHeight = 120; // 120 481
+    this.death.src = 'img/player-death-hd.png';
+    this.spriteSheetWidth = 217; // 54 217
+    this.spriteSheetHeight = 481; // 120 481
     this.spriteSrcX = 0;
     this.spriteSrcY = 0;
     this.spriteCols = 3;
@@ -36,15 +35,16 @@ function Player(game) {
     this.trackDir = trackDown;
 }
 
-Player.prototype.draw = function() {
-    this.game.ctx.drawImage(this.image, this.initx, this.inity,this.w,this.h);
-    console.log(this);
-}
+// Player.prototype.draw = function() {
+//     this.game.ctx.drawImage(this.image, this.initx, this.inity,this.w,this.h);
+//     console.log(this);
+// }
 
 Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
     // this.game.ctx.drawImage(this.image, this.x, this.y,this.w,this.h);
+    this.walk();
     this.checkBounds();
     this.animateSprite();
 }
@@ -72,9 +72,6 @@ Player.prototype.updateSprite = function(isWalking) {
 }
 
 Player.prototype.animateSprite = function() {
-    if(Number.isInteger(game.frame / 10)) {
-        this.updateSprite(this.walking);
-    }
     if(this.alive) {
         this.game.ctx.drawImage(this.image, this.spriteSrcX, this.spriteSrcY, this.spriteWidth, this.spriteHeight, this.x, this.y, this.w, this.h);
     } else {
@@ -82,29 +79,36 @@ Player.prototype.animateSprite = function() {
     }
 }
 
+Player.prototype.walk = function() {
+   if(this.alive) {
+        if(keymap.up) this.walkUp();
+        if(keymap.down) this.walkDown();
+        if(keymap.left) this.walkLeft();
+        if(keymap.right) this.walkRight();
+        if(keymap.up || keymap.down || keymap.left ||keymap.right) {
+            if(Number.isInteger(game.frame / 10)) this.updateSprite(this.walking);
+        }
+    }
+}
+
 Player.prototype.walkUp = function() {
     this.trackDir = trackUp;
-    this.y -= 10;
+    this.y -= this.vel;
 }
 
 Player.prototype.walkDown = function() {
     this.trackDir = trackDown;
-    this.y += 10;
+    this.y += this.vel;
 }
 
 Player.prototype.walkRight = function() {
     this.trackDir = trackRight;
-    this.x += 10;
+    this.x += this.vel;
 }
 
 Player.prototype.walkLeft = function() {
     this.trackDir = trackLeft;
-    this.x -= 10;
-}
-
-Player.prototype.stopWalk = function() {
-    this.vx = 0;
-    this.vy = 0;
+    this.x -= this.vel;
 }
 
 Player.prototype.checkBounds = function() {
@@ -112,28 +116,35 @@ Player.prototype.checkBounds = function() {
     var rightCell = getTheCell(this.x + this.w - 10, this.y + this.anchory, "undefined", "all");
     var topCell = getTheCell(this.x + this.anchorx, this.y + this.anchory, "all");
     var bottomCell = getTheCell(this.x + this.anchorx, this.y + this.h, "undefined", "all");
+    var blockPos = undefined;
     
     if(leftCell.constructor.name == "Block" || leftCell.constructor.name == "Wall") {
-        this.x = this.x + 5;
+        this.x = this.x + this.vel;
+        blockPos = "left";
     }
     if(rightCell.constructor.name == "Block" || rightCell.constructor.name == "Wall") {
-        this.x = this.x - 5;
+        this.x = this.x - this.vel;
+        blockPos = "right";
     }
 
     if(topCell.constructor.name == "Block" || topCell.constructor.name == "Wall") {
-        this.y = this.y + 10;
+        this.y = this.y + this.vel;
+        blockPos = "top";
     }
     if(bottomCell.constructor.name == "Block" || bottomCell.constructor.name == "Wall") {
-        this.y = this.y - 10;
+        this.y = this.y - this.vel;
+        blockPos = "bottom";
     }
+    if(blockPos && this.walking) {
+        this.game.music.collision.play();
+    }
+    return blockPos;
 }
 
 Player.prototype.throwBomb = function() {
     var cell = getTheCell(this.x + 25, this.y + 50);
-    console.log(cell);
     var bomb = new Bomb(this.game, cell.cellx, cell.celly);
     game.board.varElements[cell.celly][cell.cellx] = bomb;
-    console.log(game.board.varElements);
     var that = bomb;
     setTimeout(function(){
         that.explode();
@@ -143,7 +154,24 @@ Player.prototype.throwBomb = function() {
 Player.prototype.receiveDamage = function() {
     this.livesLeft--;
     this.alive = false;
+    var that = this;
     // alert("You die! You have " + this.livesLeft + " lives left!!");
+    updateCount("player", this.livesLeft);
+    if(this.livesLeft > 0) {
+        setTimeout(function(){
+            (that.constructor.name === "Player") ? that.revive() : that.remove();
+        }, 2000);
+    } else {
+        this.game.gameOver();
+    }
+}
+
+Player.prototype.revive = function() {
+    this.alive = true;
+    this.x = this.initx;
+    this.y = this.inity;
+    this.trackDir = trackDown;
+    this.updateSprite();
 }
 
 function getTheCell(x, y, type, layer) {

@@ -77,7 +77,15 @@ Board.prototype.draw = function() {
         for(var j = 0; j < this.cells[i].length; j++) {
             var object = this.cells[i][j];
             object.draw();
-            this.defineVarElements(object, i, j);
+        }
+    }
+}
+
+Board.prototype.drawLayerVarElements = function() {
+    for(var i = 0; i < this.cells.length; i++) {
+        for(var j = 0; j < this.cells[i].length; j++) {
+            var object = this.cells[i][j];
+             this.defineVarElements(object, i, j);
         }
     }
 }
