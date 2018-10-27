@@ -1,11 +1,23 @@
 var btnStart = document.getElementById('start-btn');
 var game;
 
-btnStart.onclick = function(e) {
+/* btnStart.onclick = function(e) {
   game = new Bomberman();
   game.start();
   document.getElementById('start-screen').classList.add('hidden');
   document.getElementById("game-over-screen").classList.add('hidden');
+} */
+var btns = document.getElementsByClassName("btn-start");
+
+
+for(var i = 0; i < btns.length; i++) {
+  btns[i].onclick = function(e) {
+    game = new Bomberman();
+    game.start();
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById("game-over-screen").classList.add('hidden');
+    
+  }
 }
 
 var keymap = {
