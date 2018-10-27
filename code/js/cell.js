@@ -60,7 +60,11 @@ Bomb.prototype.explode = function () {
     var int = setInterval(function () {
         console.log("explotando");
         that.kill(this.game.player);
-        that.kill(this.game.enemy);
+        for(var i = 0; i < this.game.enemies.length; i++) {
+            that.kill(that.game.enemies[i]);
+            // that.game.enemies.splice(i, 1);
+            console.log();
+        }
     }, 10);
     setTimeout(function () {
         console.log("EXPLOTADO");

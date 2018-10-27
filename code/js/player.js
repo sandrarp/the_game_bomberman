@@ -136,7 +136,7 @@ Player.prototype.checkBounds = function() {
         blockPos = "bottom";
     }
     if(blockPos && this.walking) {
-        this.game.music.collision.play();
+        // this.game.music.collision.play();
     }
     return blockPos;
 }
