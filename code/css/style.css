@@ -13,7 +13,8 @@ body {
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: black;
+    background-image: url(../img/bomb-pattern.png);
+    background-color: black;
 }
 
 .game-screen {
