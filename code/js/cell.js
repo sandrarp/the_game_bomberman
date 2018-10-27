@@ -57,13 +57,12 @@ Bomb.prototype.explode = function () {
     this.state = 1;
     this.calculateExplosionRange();
     this.destroy();
+    this.game.music.bomb.play();
     var int = setInterval(function () {
         console.log("explotando");
         that.kill(this.game.player);
         for(var i = 0; i < this.game.enemies.length; i++) {
             that.kill(that.game.enemies[i]);
-            // that.game.enemies.splice(i, 1);
-            console.log();
         }
     }, 10);
     setTimeout(function () {

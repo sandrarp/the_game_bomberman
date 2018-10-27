@@ -34,11 +34,15 @@ Bomberman.prototype.newLevel = function() {
 
 Bomberman.prototype.win = function() {
     document.getElementById("game-win").classList.remove('hidden');
+    this.music.win.play();
+    this.music.ambient.pause();
     gameState = 0;
 }
 
 Bomberman.prototype.gameOver = function() {
     document.getElementById("game-over-screen").classList.remove('hidden');
+    this.music.gameOver.play();
+    this.music.ambient.pause();
     gameState = 0;
 }
 
